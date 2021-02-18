@@ -10,11 +10,12 @@ from django.middleware.csrf import get_token
 
 from ..models.screenshot import Screenshot
 from ..serializers import ScreenshotSerializer, UserSerializer
+from ..forms import ScreenshotForm
 
 # Create your views here.
 class Screenshots(generics.ListCreateAPIView):
-    # authentication_classes = ()
-    # permission_classes = ()
+    authentication_classes = ()
+    permission_classes = ()
     # permission_classes=(IsAuthenticated,)
     serializer_class = ScreenshotSerializer
 
@@ -27,15 +28,18 @@ class Screenshots(generics.ListCreateAPIView):
         screenshots = Screenshot.objects.filter(owner=request.user.id)
 
         # Run the data through the serializer
+        # data = ScreenshotForm(screenshots,).data
         data = ScreenshotSerializer(screenshots, many=True).data
         return Response({ 'screenshots': data })
 
     def post(self, request):
         """Create request"""
         # Add user to request data object
-        request.data['screenshot']['owner'] = request.user.id
+        # request.data['screenshot']['owner'] = request.user.id
+        request.data.owner = request.user.id
         # Serialize/create screenshot
-        screenshot = ScreenshotSerializer(data=request.data['screenshot'])
+        # screenshot = ScreenshotSerializer(data=request.data['screenshot'])
+        screenshot = ScreenshotSerializer(data=request.data)
         # If the screenshot data is valid according to our serializer...
         if screenshot.is_valid():
             # Save the created screenshot & send a response
@@ -86,9 +90,9 @@ class ScreenshotDetail(generics.RetrieveUpdateDestroyAPIView):
             raise PermissionDenied('Unauthorized, you do not own this screenshot')
 
         # Add owner to data object now that we know this user owns the resource
-        request.data['screenshot']['owner'] = request.user.id
+        request.data.owner = request.user.id
         # Validate updates with serializer
-        data = ScreenshotSerializer(screenshot, data=request.data['screenshot'])
+        data = ScreenshotSerializer(screenshot, data=request.data)
         if data.is_valid():
             # Save & send a 204 no content
             data.save()
