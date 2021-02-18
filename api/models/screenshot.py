@@ -7,7 +7,7 @@ class Screenshot(models.Model):
   # https://docs.djangoproject.com/en/3.0/ref/models/fields/
   title = models.CharField(max_length=100)
   description = models.CharField(max_length=500, blank=True)
-  imagefile= models.FileField(upload_to='images/', null=True, verbose_name="")
+  imagefile = models.FileField(upload_to='screenshots/', null=True, verbose_name="")
   owner = models.ForeignKey(
       get_user_model(),
       on_delete=models.CASCADE

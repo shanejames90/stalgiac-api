@@ -7,7 +7,7 @@ from .models.user import User
 class ScreenshotSerializer(serializers.ModelSerializer):
     class Meta:
         model = Screenshot
-        fields = ('title', 'description', 'owner')
+        fields = ('title', 'description', 'imagefile', 'owner')
 
 class UserSerializer(serializers.ModelSerializer):
     # This model serializer will be used for User creation

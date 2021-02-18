@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework.exceptions import PermissionDenied
 from rest_framework import generics, status
 from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.contrib.auth import get_user, authenticate, login, logout
 from django.middleware.csrf import get_token
 
@@ -12,14 +13,19 @@ from ..serializers import ScreenshotSerializer, UserSerializer
 
 # Create your views here.
 class Screenshots(generics.ListCreateAPIView):
-    permission_classes=(IsAuthenticated,)
+    # authentication_classes = ()
+    # permission_classes = ()
+    # permission_classes=(IsAuthenticated,)
     serializer_class = ScreenshotSerializer
+
     def get(self, request):
         """Index request"""
         # Get all the screenshots:
-        # screenshots = Screenshot.objects.all()
+        screenshots = Screenshot.objects.all()
         # Filter the screenshots by owner, so you can only see your owned screenshots
+
         screenshots = Screenshot.objects.filter(owner=request.user.id)
+
         # Run the data through the serializer
         data = ScreenshotSerializer(screenshots, many=True).data
         return Response({ 'screenshots': data })
