@@ -25,5 +25,6 @@ class Screenshot(models.Model):
         'id': self.id,
         'title': self.title,
         'description': self.description,
+        'owner': self.owner,
         'imagefile': self.imagefile,
     }

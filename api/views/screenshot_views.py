@@ -35,8 +35,8 @@ class Screenshots(generics.ListCreateAPIView):
     def post(self, request):
         """Create request"""
         # Add user to request data object
-        request.data['screenshot']['owner'] = request.user.id
-        # request.data.owner = request.user.id
+        # request.data['screenshot']['owner'] = request.user.id
+        request.data.owner = request.user.id
         # Serialize/create screenshot
         # screenshot = ScreenshotSerializer(data=request.data['screenshot'])
         screenshot = ScreenshotSerializer(data=request.data)
