@@ -7,7 +7,8 @@ class Screenshot(models.Model):
   # https://docs.djangoproject.com/en/3.0/ref/models/fields/
   title = models.CharField(max_length=100)
   description = models.CharField(max_length=500, blank=True)
-  imagefile = models.FileField(upload_to='screenshots/', null=True, verbose_name="")
+  imagefile = models.CharField(max_length=100)
+  # imagefile = models.ImageField(upload_to='screenshots/', null=True)
   owner = models.ForeignKey(
       get_user_model(),
       on_delete=models.CASCADE
@@ -25,6 +26,6 @@ class Screenshot(models.Model):
         'id': self.id,
         'title': self.title,
         'description': self.description,
-        'owner': self.owner,
         'imagefile': self.imagefile,
+        'owner': self.owner,
     }

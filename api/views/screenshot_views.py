@@ -35,11 +35,11 @@ class Screenshots(generics.ListCreateAPIView):
     def post(self, request):
         """Create request"""
         # Add user to request data object
-        # request.data['screenshot']['owner'] = request.user.id
-        request.data.owner = request.user.id
+        request.data['screenshot']['owner'] = request.user.id
+        # request.data.owner = request.user.id
         # Serialize/create screenshot
-        # screenshot = ScreenshotSerializer(data=request.data['screenshot'])
-        screenshot = ScreenshotSerializer(data=request.data)
+        screenshot = ScreenshotSerializer(data=request.data['screenshot'])
+        # screenshot = ScreenshotSerializer(data=request.data)
         # If the screenshot data is valid according to our serializer...
         if screenshot.is_valid():
             # Save the created screenshot & send a response
@@ -90,9 +90,10 @@ class ScreenshotDetail(generics.RetrieveUpdateDestroyAPIView):
             raise PermissionDenied('Unauthorized, you do not own this screenshot')
 
         # Add owner to data object now that we know this user owns the resource
-        request.data.owner = request.user.id
+        # request.data.owner = request.user.id
+        request.data['screenshot']['owner'] = request.user.id
         # Validate updates with serializer
-        data = ScreenshotSerializer(screenshot, data=request.data)
+        data = ScreenshotSerializer(screenshot, data=request.data['screenshot'])
         if data.is_valid():
             # Save & send a 204 no content
             data.save()
