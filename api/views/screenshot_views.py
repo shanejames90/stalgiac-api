@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework.exceptions import PermissionDenied
 from rest_framework import generics, status
 from django.shortcuts import get_object_or_404
+from django.shortcuts import get_list_or_404
 from django.shortcuts import render
 from django.contrib.auth import get_user, authenticate, login, logout
 from django.middleware.csrf import get_token
@@ -54,6 +55,19 @@ class ScreenshotDetail(generics.RetrieveUpdateDestroyAPIView):
         """Show request"""
         # Locate the screenshot to show
         screenshot = get_object_or_404(Screenshot, pk=pk)
+        # Only want to show owned screenshots?
+        if not request.user.id == screenshot.owner.id:
+            raise PermissionDenied('Unauthorized, you do not own this screenshot')
+
+        # Run the data through the serializer so it's formatted
+        data = ScreenshotSerializer(screenshot).data
+        return Response({ 'screenshot': data })
+
+    def get(self, request):
+        """Authenticated Search request"""
+        # Locate the screenshot to show
+        screenshot = get_list_or_404(Screenshot, title_contains='',
+            description_contains='', imagefile_contains='')
         # Only want to show owned screenshots?
         if not request.user.id == screenshot.owner.id:
             raise PermissionDenied('Unauthorized, you do not own this screenshot')
