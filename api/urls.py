@@ -6,7 +6,6 @@ urlpatterns = [
   	# Restful routing
     path('screenshots/', Screenshots.as_view(), name='screenshots'),
     path('screenshots/<int:pk>/', ScreenshotDetail.as_view(), name='screenshot_detail'),
-    path('screenshots/search/', ScreenshotDetail.as_view(), name='screenshot_detail'),
     path('sign-up/', SignUp.as_view(), name='sign-up'),
     path('sign-in/', SignIn.as_view(), name='sign-in'),
     path('sign-out/', SignOut.as_view(), name='sign-out'),
