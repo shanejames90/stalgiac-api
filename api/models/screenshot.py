@@ -8,7 +8,7 @@ class Screenshot(models.Model):
   title = models.CharField(max_length=100)
   description = models.CharField(max_length=500, blank=True)
   imagefile = models.CharField(max_length=100)
-  # imagefile = models.ImageField(upload_to='screenshots/', null=True)
+  # imagefile = models.ImageField(upload_to='screenshots/', null=True, blank=True)
   owner = models.ForeignKey(
       get_user_model(),
       on_delete=models.CASCADE

@@ -35,22 +35,22 @@ Organizational method of the project:
 
 ### Routes #
 
-| METHOD    | Endpoint         | Component | `AuthenticatedRoute`? |
+| METHOD    | Endpoint         | Controller#Action | `AuthenticatedRoute`? |
 |------------|------------------|-------------------|-------|
-| POST    | `sign-up/`       | `SignUp`    | No |
-|   POST  | `sign-in/`       | `SignIn`    | No |
-| PATCH    | `change-password/` | `ChangePassword`  | Yes |
-| DELETE    | `sign-out/`        | `SignOut`   | Yes |
+| POST    | `sign-up/`       | users#signup    | No |
+|   POST  | `sign-in/`       | users#signin    | No |
+| PATCH    | `change-password/` | users#changepw  | Yes |
+| DELETE    | `sign-out/`        | users#signout   | Yes |
 
 
-| METHOD    | Endpoint         | Component | `AuthenticatedRoute`? |
+| METHOD    | Endpoint         | Controller#Action | `AuthenticatedRoute`? |
 |------------|------------------|-------------------|-------|
-| GET    | `/`       | `HomePageHero` `HomePageHowItWorks`    | No |
-| GET   | `screenshots/`       | `IndexScreenshots`    | Yes|
-| POST    | `screenshots/`        | `PostScreenshot`   | Yes |
-| GET   | `screenshots/<int:pk>/` | `ShowScreenshot`  | Yes |
-| PATCH    | `screenshots/<int:pk>/`        | `ShowScreenshot`   | Yes |
-| DELETE    | `screenshots/<int:pk>/`        | `ShowScreenshot`   | Yes |
+| GET    | `/`       | users#landingpage   | No |
+| GET   | `screenshots/`       | users#indexscreenshots    | Yes|
+| POST    | `screenshots/`        | users#postscreenshot   | Yes |
+| GET   | `screenshots/<int:pk>/` | users#showscreenshot  | Yes |
+| PATCH    | `screenshots/<int:pk>/`        | users#updatescreenshot   | Yes |
+| DELETE    | `screenshots/<int:pk>/`        | users#deletescreenshot   | Yes |
 
 
 ### ERD #
